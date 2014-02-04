@@ -5,7 +5,7 @@ Get all the information you need about the Worldcoin cryptocurrency.
 
 ## Screenshot
 
-<img src="https://raw.github.com/c0ding/WDCiNFO/master/doc/screenshot.png" alt="wdcinfo_screenshot" title="wdcinfo_screenshot">
+<img src="https://github.com/tdlab/WDCiNFO-Windows-Edit/blob/master/doc/screenshot.png?raw=true" alt="wdcinfo_screenshot" title="wdcinfo_screenshot">
 
 ## License
 
