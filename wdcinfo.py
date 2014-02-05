@@ -7,6 +7,7 @@ import time
 import requests
 import lxml.html
 from colorama import init
+
 init()
 
 __appname__ = "WorldCoin Cryptocurrency Information"
@@ -76,7 +77,7 @@ def output(d, hashrate, market_cap):
 	print "WDC/USD average: " + d[u'wdc_usd_avg'] + " $"
 	print "WDC/BTC average: " + d[u'wdc_btc_avg'] + " BTC\n"
 	print "\033[4mWorldcoin price health:\033[0m\n"
-	print "Cryptsy   :  " + d[u'cryptsy_set'] + "         Vircurex  :  " + d[u'vircurex_set'] + "         Crypto Trade  :  " + d[u'crypto_trade_set']
+	print "Cryptsy   :  " + d[u'cryptsy_set'] + "         Vircurex  :  " + d[u'vircurex_set'] + "        Crypto Trade  :  " + d[u'crypto_trade_set']
 	print "Coinbase  :  " + d[u'coinbase_btc_set'] + "         mtgox     :  " + d[u'coinbase_btc_set'] + "         BTC-E         :  " + d[u'btc_e_btc_set']
 	print "Overall Worldcoin price health: " + d[u'health_rating']
 	print "\n\033[4mGeneral Worldcoin Stats:\033[0m\n "
@@ -84,7 +85,7 @@ def output(d, hashrate, market_cap):
 	print hashrate[0] + "       Market cap change    : " + market_cap[3]
 	print "Total blocks found: " + hashrate[1] + "            Market trading volume: " + market_cap[2]
 	print "Total WDC mined   : " + market_cap[1] + "\n"
-	print "Last updated at " + time.strftime('%H:%M:%S',time.localtime()) + " | Made with \033[31m<3\033[39m by @c0ding, c 2014"
+	print "Last updated at " + time.strftime('%H:%M:%S',time.localtime()) + " | Made with \033[31m<3\033[39m by @c0ding, 2014"
 
 def main():
 	try:
