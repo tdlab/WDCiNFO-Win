@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-encoding='utf-8'
+
 import os
 import json
 import time
@@ -8,8 +8,9 @@ import requests
 import lxml.html
 from colorama import init
 init()
+
 __appname__ = "WorldCoin Cryptocurrency Information"
-__version__ = "v.0.7"
+__version__ = "v.0.8.1"
 
 def get_info():
 	""" Fetches price and network difficulty from wdcticker.com """
@@ -22,18 +23,18 @@ def get_info():
 			d[key] = "\033[32mUP\033[39m"
 		else:
 			d[key] = "\033[31mDOWN\033[39m"
-			
-	if 0 >= d[u'health_rating'] <= 2:
-		d[u'health_rating'] = "\033[31m" + str(d[u'health_rating']) + "/6" + "\033[39m"
 
-	if 3 >= d[u'health_rating'] <= 4:
-		d[u'health_rating'] = "\033[33m" + str(d[u'health_rating']) + "/6" + "\033[39m"
-
-	if 5 >= d[u'health_rating']:
+	if d[u'health_rating']>= 6:
+		d[u'health_rating'] = "\033[32m" + str(d[u'health_rating']) + str("/6") + "\033[39m"
+	
+	elif d[u'health_rating'] >= 5:
 		d[u'health_rating'] = "\033[32m" + str(d[u'health_rating']) + "/6" + "\033[39m"
 	
-	if d[u'health_rating'] <= 6:
-		d[u'health_rating'] = "\033[32m" + str(d[u'health_rating']) + str("/6") + "\033[39m"
+	elif 4 >= d[u'health_rating'] >= 3:
+		d[u'health_rating'] = "\033[33m" + str(d[u'health_rating']) + "/6" + "\033[39m"
+	
+	elif d[u'health_rating'] <= 2:
+		d[u'health_rating'] = "\033[31m" + str(d[u'health_rating']) + "/6" + "\033[39m"
 	
 	d[u'network_diff'] = '%.3f' % d[u'network_diff']
 	
@@ -56,14 +57,15 @@ def get_even_more_info():
 	""" Fetches market cap, trading volume, trading volume fluctuation and total WDC supply found from coinmarketcap.com """
 	data = lxml.html.parse("http://coinmarketcap.com/")
 	tree = data.xpath('//tr[@id="wdc"]/td//text()')
-	market_cap = tree[3]
-	total_wdc = tree[5]
-	market_volume = tree[6]
-	market_cap_change = tree[7]
-	if market_cap_change > 0:
-		market_cap_change = "\033[32m" + market_cap_change + "\033[39m"
+	tree = [x for x in tree if x != ' ']
+	market_cap = tree[2]
+	total_wdc = tree[4]
+	market_volume = tree[5]
+	market_cap_change = tree[6]
+	if float(market_cap_change.split(" ")[0]) > 0:
+		market_cap_change = "\033[32m" + market_cap_change.split(" ")[0] + " % " + "\033[39m"
 	else:
-		market_cap_change = "\033[31m" + market_cap_change + "\033[39m"
+		market_cap_change = "\033[31m" + market_cap_change.split(" ")[0] + " % " + "\033[39m"
 	return market_cap, total_wdc, market_volume, market_cap_change
 
 def output(d, hashrate, market_cap):
@@ -82,14 +84,14 @@ def output(d, hashrate, market_cap):
 	print hashrate[0] + "       Market cap change    : " + market_cap[3]
 	print "Total blocks found: " + hashrate[1] + "            Market trading volume: " + market_cap[2]
 	print "Total WDC mined   : " + market_cap[1] + "\n"
-	print "Last updated at " + time.strftime('%H:%M:%S',time.localtime()) + " | Made with \033[31m<3\033[39m by @c0ding, © 2014"
+	print "Last updated at " + time.strftime('%H:%M:%S',time.localtime()) + " | Made with \033[31m<3\033[39m by @c0ding, c 2014"
 
 def main():
 	try:
 		output(get_info(), get_more_info(), get_even_more_info())
 	except:
 		print "Something went awfully wrong, please try again later."
-		
+
 if __name__ == "__main__":
 	try:
 		main()
